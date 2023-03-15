@@ -1,0 +1,42 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:th="http://www.thymeleaf.org"
+          xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+    <head> 
+        <meta charset="utf-8"/>
+        <title>Spring MVC</title>
+</head>    
+   
+            
+            
+
+        <body>
+            <h1>Welcome to my spring app boys</h1>
+        <form method="POST" action="/mvc/add">
+            <label>Things you need to do: </label>
+            <input type="text" name="task" maxlength="100" required/>
+            
+            <input type="submit">
+        </form>
+            
+            <tr th:each="task: ${tasks}">
+    <td th:text="${task.id}" />
+    <td th:text="${task.item}" />
+</tr>
+    <tbody>
+        
+        
+        
+        
+	<tr th:if="${tasks.empty}">
+            <td colspan="2"> No Tasks Available </td>
+        </tr>
+        
+        <tr th:each="task : ${tasks}">
+            <td><span th:text="${task.id}"> Title </span></td>
+            <td><span th:text="${task.item}"> Author </span></td>
+            <td><span th:text="${task.item}"> Author </span></td>
+    <br/>
+        </tr>
+    </tbody>
+        </body>    
+    </html>  
