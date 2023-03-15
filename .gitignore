@@ -1,4 +1,3 @@
-Dockerfile
 target/
 nbactions.xml
 src/test/*

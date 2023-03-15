@@ -1,0 +1,36 @@
+## YAML Template.
+---
+version: "3.8"
+
+services:
+    web_app:
+#        restart: always
+        depends_on: 
+            app_db:
+              condition: service_healthy
+        build: .
+        ports:
+            - 880:8080
+        
+    app_db:
+        image: mysql:latest
+#        restart: always
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+            interval: 1s
+            timeout: 3s
+            retries: 30
+
+        environment: 
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: tododb
+            MYSQL_USER: todo_app
+            MYSQL_PASSWORD: password
+        volumes:
+            - todo-mysql-data:/var/lib/mysql
+
+volumes:
+  todo-mysql-data:
+        
+        
+        

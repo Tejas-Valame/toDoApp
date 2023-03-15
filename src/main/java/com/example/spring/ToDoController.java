@@ -6,6 +6,7 @@ package com.example.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 /**
@@ -20,13 +21,13 @@ public class ToDoController {
         this.tds = tds;
     }
     
-    @PostMapping(path="/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser (@RequestParam String task) {
+    @PostMapping(path="/mvc/add") // Map ONLY POST Requests
+    public  String addNewUser (@RequestParam String task) {
     
     ToDoItem i = new ToDoItem();
     i.setItem(task);
     tds.save(i);
-    return "Saved";
+    return "redirect:/mvc";
   }
   
     @GetMapping("/myItems")
@@ -34,5 +35,11 @@ public class ToDoController {
         return tds.findAll();
     }
     
-        
+    
+    @GetMapping("/mvc")
+    public ModelAndView mvc()  {
+        ModelAndView modelAndView = new ModelAndView("index");    
+        modelAndView.addObject("tasks", tds.findAll());
+        return modelAndView;
+    }
 }
