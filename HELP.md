@@ -17,6 +17,10 @@ Clone and run project with Git
 
   docker-compose up
 ```
+View this app at 
+
+https://localhost:8080
+
 ## To bring down application
 
 ```

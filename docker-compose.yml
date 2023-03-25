@@ -10,7 +10,7 @@ services:
               condition: service_healthy
         build: .
         ports:
-            - 880:8080
+            - 8080:8080
         
     app_db:
         image: mysql:latest
