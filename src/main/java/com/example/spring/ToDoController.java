@@ -6,29 +6,39 @@ package com.example.spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-@RestController
+import org.springframework.stereotype.Controller;
+import org.springframework.web.servlet.ModelAndView;
+@Controller
 /**
  *
  * @author Valame
  */
 public class ToDoController {
-    private ToDoInterface tds;
 
     @Autowired
-    public ToDoController(ToDoInterface tds) {
-        this.tds = tds;
+    private  ToDoInterface tds;
+    
+    @GetMapping("/")
+    public ModelAndView home(ModelAndView m){
+//        ModelAndView modelAndView = new ModelAndView();
+          m.setViewName("index");
+          m.addObject("tasks", tds.findAll());
+          return m;
     }
     
-    @PostMapping(path="/add") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser (@RequestParam String task) {
+    @PostMapping(path="/mvc/add") // Map ONLY POST Requests
+    public String addNewUser (@RequestParam String task) {
+        ToDoItem i = new ToDoItem();
+        i.setItem(task);
+        tds.save(i);
+        return "redirect:/";
+    }
     
-    ToDoItem i = new ToDoItem();
-    i.setItem(task);
-    tds.save(i);
-    return "Saved";
-  }
-  
+    @GetMapping(path="/mvc/delete/{id}")
+    public String deleteUse(@PathVariable("id") Integer id){
+        tds.deleteById(id);
+        return "redirect:/";
+    }
     @GetMapping("/myItems")
     public Iterable<ToDoItem> returnItems(){
         return tds.findAll();
